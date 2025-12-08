@@ -1,6 +1,4 @@
-package org.accesspointprogram;            // `org.accesspointprogram`, since the naming convention is based on domain names,
-import org.accesspointprogram.DatabaseService;
-import org.accesspointprogram.EmailService;			   //  and Access Point owns https://accesspointprogram.org.
+package org.accesspointprogram;            // `org.accesspointprogram`, since the naming convention is based on domain names,		   //  and Access Point owns https://accesspointprogram.org.
 
 import javafx.scene.control.PasswordField;    //  - Similar to `TextField`, but specifically for passwords and keeping the contents secure.
 import javafx.application.Application;        //  - The class representing applications.
@@ -46,7 +44,7 @@ public final class App extends Application {
 	private static       String                heldEmail;                                   //  <-- Email.         ┘
 	
 	private static       Stage         window;
-	        static       Page          page           = Page.Signup;
+	        static       Page          page           = Page.LogIn;
 	
 	public static void main(String[] args) {
 		App.launch(args);

@@ -156,7 +156,26 @@ public enum Page {
 			
 			formContainer.getChildren().add(App.submitButton);
 		}
-		
+		// New to Calins code - added a button to go to signup page from login page
+		if (App.page == Page.LogIn) {
+			Button goToSignup  = new Button("Create an Account");
+			goToSignup.setOnAction(e -> {
+				App.page = Page.Signup;
+				App.loginState = App.LoginState.LoggedOut;
+				App.refreshUI();
+			});
+			formContainer.getChildren().add(goToSignup);
+		}
+		// New to Calins code - added a back button to go to login page from signup page
+		if (App.page == Page.Signup && App.loginState != App.LoginState.SignupConfirmation) {
+			Button goBack  = new Button("Back to Login");
+			goBack.setOnAction(e -> {
+				App.page = Page.LogIn;
+				App.loginState = App.LoginState.LoggedOut;
+				App.refreshUI();
+			});
+			formContainer.getChildren().add(goBack);
+		}
 		
 		return new Scene(formContainer);
 	}
