@@ -9,7 +9,7 @@ public class send_mail {
     public static void main(String[] args) {
 
         // Create email service and get unverified emails
-        UserEmailService emailService = new UserEmailService();
+        DatabaseService emailService = new DatabaseService();
         List<String> unverifiedEmails = emailService.getUnverifiedUserEmails();
 
         // Define email details
@@ -60,7 +60,7 @@ public class send_mail {
             e.printStackTrace();
         } // gives error information
         }
-        // Don't forget to close the MongoDB connection
+        // closes the MongoDB connection
         emailService.close();
     }
 }
