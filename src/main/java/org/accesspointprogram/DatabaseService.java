@@ -113,7 +113,7 @@ public class DatabaseService {
             );
         }
     }
-    //  this is used by send_mail program to get all unverified users.
+    //  this is used by EmailService program to get all unverified users.
     public List<String> getUnverifiedUserEmails() {
     List<String> emails = new ArrayList<>();
 

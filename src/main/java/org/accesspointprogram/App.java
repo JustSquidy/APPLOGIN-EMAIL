@@ -1,5 +1,6 @@
 package org.accesspointprogram;            // `org.accesspointprogram`, since the naming convention is based on domain names,
-										   //  and Access Point owns https://accesspointprogram.org.
+import org.accesspointprogram.DatabaseService;
+import org.accesspointprogram.EmailService;			   //  and Access Point owns https://accesspointprogram.org.
 
 import javafx.scene.control.PasswordField;    //  - Similar to `TextField`, but specifically for passwords and keeping the contents secure.
 import javafx.application.Application;        //  - The class representing applications.
@@ -11,11 +12,15 @@ import javafx.stage.Stage;                    //  - ???        [  Ditto. But, su
 import java.util.regex.Pattern;               //  - Enable the use ov regular-expressions.
 import java.util.Optional;                    //  - Represents a value that may or may not be present.  (Similar to Rust's `Option<T>`.)
 
-
-
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextInputDialog;
+// these are javafx dialog boxes that will be used for popup messages for varification and messages.
 
 public final class App extends Application {
+	private static final DatabaseService db = new DatabaseService();     // Handles MongoDB.
+	private static final EmailService emailService = new EmailService(); // Handles sending verification emails.
+
 	/** Datatype to determine whether the user is inputting new information or confirming already-entered information. */
 	enum LoginState {
 		/** Confirming already-entered info. */
@@ -44,7 +49,6 @@ public final class App extends Application {
 	        static       Page          page           = Page.Signup;
 	
 	public static void main(String[] args) {
-		// TODO:  Hook this system into the other part(s) ov our app, instead ov just putting it in `main`.
 		App.launch(args);
 	}
 	
@@ -60,24 +64,60 @@ public final class App extends Application {
 		window.show();
 	}
 	
-	
-	
 	/** Take the form inputs and figure out what to do. */
 	static boolean processFormSubmission(String email, String password) {
 		switch(App.page) {
 			case Signup -> {
 				if(App.loginState != LoginState.SignupConfirmation && App.isValidEmail(email)) {
+
+					if (db.isEmailInUse(email)) {
+						showAlert("This email is already registered");
+						return false;
+					} 
 					App.heldPassHash = App.passwordWidget.getText().hashCode();
 					App.loginState = LoginState.SignupConfirmation;
+					App.accountType = Optional.of(App.accountTypeWidget.getValue());
 					App.heldEmail = email;
 					
 					return true;
 				}
 				
 				long hash  = App.passwordWidget.getText().hashCode();
-				if(!(email.equalsIgnoreCase(App.heldEmail) && hash == App.heldPassHash)) return false;
-				
-				// TODO:  Put account registration logic here.
+				if(!(email.equalsIgnoreCase(App.heldEmail) && hash == App.heldPassHash))
+					 return false;
+
+
+				// EmailService.java generates and returns the code so that App.java can verify it.
+				int verificationCode = emailService.sendVerificationCode(email);
+
+				// This popup requests the verification code from the user. it also shows which email the code was sent to.
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Verify Your Email");
+				dialog.setHeaderText("A 6-digit verification code has been sent to: \n" + email);
+				dialog.setContentText("Please enter the verification code:");
+
+				Optional<String> result = dialog.showAndWait();
+
+                if (result.isEmpty()) {
+                    showAlert("Verification cancelled.");
+                    return false;
+                }
+				try {
+					int enteredCode = Integer.parseInt(result.get().trim());
+					if (enteredCode != verificationCode) {
+						showAlert("Incorrect verification code. Please try again.");
+						return false;
+					}
+				} catch (NumberFormatException e) {
+					showAlert("Please enter numbers only");
+					return false;
+				}
+
+				// if the code entered is correct, it will create the user in the database.
+				db.createUser(email, password, App.accountType.get().toString());
+
+				showAlert("Account created successfully! You can now log in.");
+
 				App.loginState = LoginState.LoggedOut;
 				App.page = Page.LogIn;
 				
@@ -85,8 +125,8 @@ public final class App extends Application {
 			}
 			
 			case LogIn -> {
-				final boolean loginStatus = App.tryToLogIn(email, password.hashCode());
-				if(loginStatus) {
+				boolean loginStatus = db.validateLogin(email, password);
+				if (loginStatus) {
 					App.loginState = LoginState.LoggedIn;
 					App.page = Page.Home;
 				}
@@ -97,22 +137,8 @@ public final class App extends Application {
 		}
 	}
 	
-	private static boolean isValidEmail(String emailAddress) {  return App.EMAIL_REGEX.matcher(emailAddress).matches();  }
-	
-	/** Logic for logging in. */
-	private static boolean tryToLogIn(String email, long passwordHash) {
-		System.out.printf("Trying to log in with email \"%s\" and password \"%s\".\n", App.emailWidget.getText(), App.passwordWidget.getText());
-		// TODO:  Implement logic for logging in.
-		
-		// TODO: Replace this constant with actual logic.
-		final boolean LOGIN_SUCCESSFUL = false;
-		if(LOGIN_SUCCESSFUL) {
-			App.loginState = LoginState.LoggedIn;
-			App.page = Page.Home;
-		}
-		
-		return LOGIN_SUCCESSFUL;
-	}
+	private static boolean isValidEmail(String emailAddress) {
+		return App.EMAIL_REGEX.matcher(emailAddress).matches();  }
 	
 	/** "Refresh" the user-interface by resetting the child ov the window element. */
 	static void refreshUI() {
@@ -121,4 +147,11 @@ public final class App extends Application {
 			case Home          -> Page.createHomepage();
 		});
 	}
+	private static void showAlert(String message) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+}
+
 }
