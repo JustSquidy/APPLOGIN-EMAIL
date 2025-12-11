@@ -1,4 +1,4 @@
-package org.accesspointprogram;            // `org.accesspointprogram`, since the naming convention is based on domain names,		   //  and Access Point owns https://accesspointprogram.org.
+package org.accesspointprogram.Login.Registration;            // `org.accesspointprogram`, since the naming convention is based on domain names,		   //  and Access Point owns https://accesspointprogram.org.
 
 import javafx.scene.control.PasswordField;    //  - Similar to `TextField`, but specifically for passwords and keeping the contents secure.
 import javafx.application.Application;        //  - The class representing applications.

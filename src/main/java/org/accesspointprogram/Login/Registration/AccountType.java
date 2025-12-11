@@ -1,10 +1,6 @@
-package org.accesspointprogram;
+package org.accesspointprogram.Login.Registration;
 
 import java.util.Optional;    //  - Represents a value that may or may not be present.  (Similar to Rust's `Option<T>`.)
-
-
-
-
 
 /** A datatype that represents the type ov an account. */
 public enum AccountType {

@@ -1,4 +1,4 @@
-package org.accesspointprogram;
+package org.accesspointprogram.Login.Registration;
 
 import javafx.scene.control.PasswordField;    //  - Similar to `TextField`, but specifically for passwords and keeping the contents secure.
 import javafx.scene.control.TextFormatter;    //  - Used to control the formatting that is considered acceptable in input-fields.

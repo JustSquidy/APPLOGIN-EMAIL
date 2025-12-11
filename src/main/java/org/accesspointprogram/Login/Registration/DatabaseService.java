@@ -1,4 +1,4 @@
-package org.accesspointprogram;
+package org.accesspointprogram.Login.Registration;
 
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;

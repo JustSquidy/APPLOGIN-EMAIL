@@ -1,4 +1,4 @@
-package org.accesspointprogram;
+package org.accesspointprogram.Login.Registration;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
