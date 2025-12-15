@@ -28,15 +28,8 @@ public enum Page {
 	/** The log-in page. */
 	LogIn,
 	/** The home page. */
-	Home;
-	
-	static Scene createHomepage() {
-		final VBox homepageContainer = new VBox();
-		
-		homepageContainer.getChildren().add(new Label("Test Homepage"));
-		
-		return new Scene(homepageContainer);
-	}
+	Dashboard;
+
 	
 	/** Build the sign-up/log-in page. */
 	static Scene createForm() {

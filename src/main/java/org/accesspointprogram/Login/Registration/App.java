@@ -7,6 +7,11 @@ import javafx.scene.control.TextField;        //  - An area to enter text.  (Equ
 import javafx.scene.control.Button;           //  - A basic, clickable widget.
 import javafx.stage.Stage;                    //  - ???        [  Ditto. But, supposedly, represents the top-level window, like GTK `ApplicationWindow`.  ]
 
+import javafx.fxml.FXMLLoader;                             // <-- Needed for loading Dashboard FXML
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
+
 import java.util.regex.Pattern;               //  - Enable the use ov regular-expressions.
 import java.util.Optional;                    //  - Represents a value that may or may not be present.  (Similar to Rust's `Option<T>`.)
 
@@ -126,7 +131,24 @@ public final class App extends Application {
 				boolean loginStatus = db.validateLogin(email, password);
 				if (loginStatus) {
 					App.loginState = LoginState.LoggedIn;
-					App.page = Page.Home;
+
+					try {
+                        Parent root = FXMLLoader.load( 
+                            App.class.getResource("/org/accesspointprogram/Dashboard/dashboard.fxml")
+                        );  //loads dashboard.fxml from resources folder
+
+                        Scene dashboardScene = new Scene(root);
+                        App.window.setScene(dashboardScene); // <-- Switches to Dashboard UI
+                        App.window.setTitle("Robot Dashboard"); // <-- Update window title
+
+						App.page = Page.Dashboard;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showAlert("Error loading dashboard: " + e.getMessage());
+                    }
+
+					App.page = Page.Dashboard;  // Create this new page type for logged-in users instead of just plain text saying "test home page".
 				}
 				return loginStatus;
 			}
@@ -138,13 +160,22 @@ public final class App extends Application {
 	private static boolean isValidEmail(String emailAddress) {
 		return App.EMAIL_REGEX.matcher(emailAddress).matches();  }
 	
-	/** "Refresh" the user-interface by resetting the child ov the window element. */
-	static void refreshUI() {
-		App.window.setScene(switch(App.page) {
-			case Signup, LogIn -> Page.createForm();
-			case Home          -> Page.createHomepage();
-		});
-	}
+
+	//refreshUI no longer overwrites Dashboard */
+    static void refreshUI() {
+
+        // If we are on the dashboard, DO NOT replace the scene.
+        if (App.page == Page.Dashboard) {
+            return; // prevents dashboard from being overwritten
+        }
+
+        Scene newScene = switch (App.page) {
+            case Signup, LogIn -> Page.createForm();
+            default -> Page.createForm();
+        };
+
+        App.window.setScene(newScene);
+    }
 	private static void showAlert(String message) {
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setHeaderText(null);

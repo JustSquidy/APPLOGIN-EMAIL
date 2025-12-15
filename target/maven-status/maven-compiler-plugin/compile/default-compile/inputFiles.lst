@@ -1,5 +1,9 @@
-C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\DatabaseService.java
-C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Page.java
-C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\AccountType.java
-C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\App.java
-C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\EmailService.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Login\Registration\Page.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Login\Registration\DatabaseService.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Dashboard\HelloApplication.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Dashboard\SimulationRunnerController.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Login\Registration\AccountType.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Login\Registration\EmailService.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Login\Registration\App.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\module-info.java
+C:\Users\Javier Reyes\IdeaProjects\APPLOGIN-EMAIL\src\main\java\org\accesspointprogram\Dashboard\HelloController.java

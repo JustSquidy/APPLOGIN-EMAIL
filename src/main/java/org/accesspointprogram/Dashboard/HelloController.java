@@ -20,6 +20,8 @@ public class HelloController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();   // forces window to match FXML
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -29,6 +31,8 @@ public class HelloController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();    
+        stage.centerOnScreen(); 
         stage.show();
     }
 
@@ -38,6 +42,8 @@ public class HelloController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();     
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -47,6 +53,8 @@ public class HelloController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();     
+        stage.centerOnScreen();
         stage.show();
     }
     // RULESET
@@ -55,6 +63,8 @@ public class HelloController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();    
+        stage.centerOnScreen();
         stage.show();
     }
     public void SimulationRunner(ActionEvent event) throws IOException {
@@ -62,6 +72,8 @@ public class HelloController {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.sizeToScene();     
+        stage.centerOnScreen();
         stage.show();
     }
 }

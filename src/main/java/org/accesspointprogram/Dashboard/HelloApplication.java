@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/example/hellofx/dashboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/accesspointprogram/Dashboard/dashboard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         // Set window icon (make sure robot.jpg is in resources)
