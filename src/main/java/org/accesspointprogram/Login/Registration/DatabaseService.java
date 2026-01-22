@@ -1,19 +1,23 @@
 package org.accesspointprogram.Login.Registration;
 
-import com.mongodb.client.*;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
-import org.bson.Document;
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID; 
 
+import org.bson.Document;
+import org.mindrot.jbcrypt.BCrypt;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+
 
 // This class initializes the connection to the MongoDB database and provides a connection so that the program can interact with it.
-public class DatabaseService {
+public class DatabaseService { // ------------------------------------------
 
     private final MongoClient client;
     private final MongoDatabase database;
@@ -52,9 +56,7 @@ public class DatabaseService {
                 .append("created_at", Instant.now().toString())
                 .append("updated_at", Instant.now().toString())
                 .append("last_login", null)
-                .append("login_count", 0)
-                .append("password_reset_token", null)
-                .append("password_reset_expires", null);
+                .append("login_count", 0);
 
         users.insertOne(doc);
     }
